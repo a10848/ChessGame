@@ -1,6 +1,6 @@
-﻿using ChessGame.ChessBoard.Enums;
+﻿using ChessBoard.Enums;
 
-namespace ChessGame.ChessBoard
+namespace ChessBoard
 {
     class Piece
     {
@@ -15,6 +15,11 @@ namespace ChessGame.ChessBoard
             Color = color;
             Board = board;
             QtyMovements = 0;
+        }
+
+        public void IncrementQtyMovements()
+        {
+            QtyMovements++;
         }
     }
 }

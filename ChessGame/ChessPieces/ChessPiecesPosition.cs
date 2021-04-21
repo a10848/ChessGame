@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ChessGame.ChessBoard;
+using ChessBoard;
 
-namespace ChessGame.ChessPieces
+namespace ChessPieces
 {
     class ChessPiecesPosition
     {

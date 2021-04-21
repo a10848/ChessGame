@@ -1,6 +1,6 @@
-﻿using ChessGame.ChessBoard.Exceptions;
+﻿using ChessBoard.Exceptions;
 
-namespace ChessGame.ChessBoard
+namespace ChessBoard
 {
     class Board
     {
@@ -37,6 +37,17 @@ namespace ChessGame.ChessBoard
             }
             pieces[position.Line, position.Column] = piece;
             piece.Position = position;
+        }
+        public Piece RemovePiece(Position position)
+        {
+            if (Piece(position)==null)
+            {
+                return null;
+            }
+            Piece auxPiece = Piece(position);
+            auxPiece.Position = null;
+            pieces[position.Line, position.Column] = null;
+            return auxPiece;
         }
 
         public bool ValidPosition(Position position)

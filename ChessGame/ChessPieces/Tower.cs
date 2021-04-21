@@ -1,7 +1,7 @@
-﻿using ChessGame.ChessBoard;
-using ChessGame.ChessBoard.Enums;
+﻿using ChessBoard;
+using ChessBoard.Enums;
 
-namespace ChessGame.ChessPieces
+namespace ChessPieces
 {
     class Tower : Piece
     {
