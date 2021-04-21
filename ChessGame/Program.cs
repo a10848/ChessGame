@@ -12,20 +12,21 @@ namespace ChessGame
         {
             try
             {
-                /*Board board = new Board(8, 8);
+                Board board = new Board(8, 8);
 
-                board.AddPiece(new Tower(board, Color.Black), new Position(0, 0));
+                board.AddPiece(new Tower(board, Color.White), new Position(0, 0));
                 board.AddPiece(new King(board, Color.Black), new Position(0, 4));
-                board.AddPiece(new Tower(board, Color.Black), new Position(1, 3));
+                board.AddPiece(new Tower(board, Color.White), new Position(1, 3));
                 board.AddPiece(new King(board, Color.Black), new Position(2, 4));
+                board.AddPiece(new Tower(board, Color.White), new Position(3, 3));
+                board.AddPiece(new King(board, Color.Black), new Position(5, 4));
 
-                Screen.PrintScreen(board);*/
+                Screen.PrintScreen(board);
 
-                ChessPiecesPosition position = new ChessPiecesPosition('a', 1);
+                /*ChessPiecesPosition position = new ChessPiecesPosition('a', 1);
 
                 Console.WriteLine(position);
-                Console.WriteLine(position.ToPosition());
-
+                Console.WriteLine(position.ToPosition());*/
 
             }
             catch (BoardException error)
