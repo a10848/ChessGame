@@ -14,14 +14,18 @@ namespace ChessPieces
         public int Round { get; private set; }
         public Color Player { get; private set; }
         public bool Finished { get; private set; }
+        private HashSet<Piece> pieces;
+        private HashSet<Piece> capturedPieces;
 
         public RulesForChessGame()
         {
             Board = new Board(8, 8);
             Round = 1;
             Player = Color.White;
-            PositioningPieces();
             Finished = false;
+            pieces = new HashSet<Piece>();
+            capturedPieces = new HashSet<Piece>();
+            PositioningPieces();
         }
 
         public void PieceMovement(Position origin, Position final)
@@ -30,6 +34,10 @@ namespace ChessPieces
             piece.IncrementQtyMovements();
             Piece capturedPiece = Board.RemovePiece(final);
             Board.AddPiece(piece, final);
+            if (capturedPiece != null)
+            {
+                capturedPieces.Add(capturedPiece);
+            }
         }
 
         public void MakeAMovement(Position origin, Position final)
@@ -49,6 +57,37 @@ namespace ChessPieces
             {
                 Player = Color.White;
             }
+        }
+
+        public HashSet<Piece> CapturedPieces(Color color)
+        {
+            HashSet<Piece> auxPieces = new HashSet<Piece>();
+
+            foreach (Piece piece in capturedPieces)
+            {
+                if (piece.Color == color)
+                {
+                    auxPieces.Add(piece);
+                }
+            }
+
+            return auxPieces;
+        }
+        public HashSet<Piece> PiecesInPlay(Color color)
+        {
+            HashSet<Piece> auxPieces = new HashSet<Piece>();
+
+            foreach (Piece piece in pieces)
+            {
+                if (piece.Color == color)
+                {
+                    auxPieces.Add(piece);
+                }
+            }
+
+            auxPieces.ExceptWith(CapturedPieces(color));
+
+            return auxPieces;
         }
 
         public void ValidateOriginPosition(Position position)
@@ -75,14 +114,20 @@ namespace ChessPieces
             }
         }
 
+        public void AddNewPiece(char column, int line, Piece piece)
+        {
+            Board.AddPiece(piece, new ChessPiecesPosition(column, line).ToPosition());
+            pieces.Add(piece);
+        }
+
         private void PositioningPieces()
         {
-            Board.AddPiece(new Tower(Board, Color.White), new ChessPiecesPosition('a', 1).ToPosition());
-            Board.AddPiece(new Tower(Board, Color.White), new ChessPiecesPosition('h', 1).ToPosition());
-            Board.AddPiece(new Tower(Board, Color.Black), new ChessPiecesPosition('a', 8).ToPosition());
-            Board.AddPiece(new Tower(Board, Color.Black), new ChessPiecesPosition('h', 8).ToPosition());
-            Board.AddPiece(new King(Board, Color.White), new ChessPiecesPosition('e', 1).ToPosition());
-            Board.AddPiece(new King(Board, Color.Black), new ChessPiecesPosition('e', 8).ToPosition());
+            AddNewPiece('a', 1, new Tower(Board, Color.White));
+            AddNewPiece('h', 1, new Tower(Board, Color.White));
+            AddNewPiece('a', 8, new Tower(Board, Color.Black));
+            AddNewPiece('h', 8, new Tower(Board, Color.Black));
+            AddNewPiece('e', 1, new King(Board, Color.White));
+            AddNewPiece('e', 8, new King(Board, Color.Black));
         }
     }
 }

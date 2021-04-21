@@ -19,11 +19,7 @@ namespace ChessGame
                     try
                     {
                         Console.Clear();
-                        Screen.PrintScreen(chessGame.Board);
-
-                        Console.WriteLine();
-                        Console.WriteLine("Round: " + chessGame.Round);
-                        Console.WriteLine("Payer turn: " + chessGame.Player);
+                        Screen.PrintChessPlay(chessGame);
 
                         Console.WriteLine();
                         Console.Write("Piece to move: ");

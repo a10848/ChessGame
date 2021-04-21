@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ChessBoard;
 using ChessBoard.Enums;
 using ChessPieces;
@@ -7,6 +8,41 @@ namespace ChessGame
 {
     class Screen
     {
+        public static void PrintChessPlay(RulesForChessGame chessGame)
+        {
+            PrintScreen(chessGame.Board);
+            Console.WriteLine();
+            PrintCapturedPieces(chessGame);
+            Console.WriteLine();
+            Console.WriteLine("Round: " + chessGame.Round);
+            Console.WriteLine("Payer turn: " + chessGame.Player);
+        }
+
+        public static void PrintCapturedPieces(RulesForChessGame chessGame)
+        {
+            Console.WriteLine("Captured pieces:");
+            Console.Write("White: ");
+            ConsoleColor auxColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            PrintAssembly(chessGame.CapturedPieces(Color.White));
+            Console.ForegroundColor = auxColor;
+            Console.WriteLine();
+            Console.Write("Black: ");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            PrintAssembly(chessGame.CapturedPieces(Color.Black));
+            Console.ForegroundColor = auxColor;
+            Console.WriteLine();
+        }
+
+        public static void PrintAssembly(HashSet<Piece> pieces)
+        {
+            Console.Write("[");
+            foreach (Piece piece in pieces)
+            {
+                Console.Write(piece + " ");
+            }
+            Console.Write("]");
+        }
 
         public static void PrintScreen(Board board)
         {

@@ -40,7 +40,7 @@ namespace ChessBoard
         }
         public Piece RemovePiece(Position position)
         {
-            if (Piece(position)==null)
+            if (Piece(position) == null)
             {
                 return null;
             }
@@ -52,7 +52,7 @@ namespace ChessBoard
 
         public bool ValidPosition(Position position)
         {
-            if(position.Line<0 || position.Line>= Lines || position.Column < 0 || position.Column >= Columns)
+            if (position.Line < 0 || position.Line >= Lines || position.Column < 0 || position.Column >= Columns)
             {
                 return false;
             }
