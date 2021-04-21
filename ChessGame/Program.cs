@@ -1,5 +1,6 @@
 ﻿using System;
 using ChessGame.ChessBoard;
+using ChessGame.ChessPieces;
 using ChessGame.ChessBoard.Enums;
 
 namespace ChessGame
@@ -8,9 +9,13 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-            Board b = new Board(8, 8);
+            Board board = new Board(8, 8);
 
-            Screen.PrintScreen(b);
+            board.AddPiece(new Tower(board, Color.Black), new Position(0, 0));
+            board.AddPiece(new Tower(board, Color.Black), new Position(1, 3));
+            board.AddPiece(new King(board, Color.Black), new Position(2, 4));
+
+            Screen.PrintScreen(board);
         }
     }
 }

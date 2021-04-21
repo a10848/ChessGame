@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using ChessGame.ChessBoard;
 
 namespace ChessGame
@@ -14,13 +12,13 @@ namespace ChessGame
             {
                 for (int j = 0; j < board.Lines; j++)
                 {
-                    if (board.piece(i, j) == null)
+                    if (board.Piece(i, j) == null)
                     {
-                        Console.Write("_ ");
+                        Console.Write("- ");
                     }
                     else
                     {
-                        Console.Write(board.piece(i, j) + " ");
+                        Console.Write(board.Piece(i, j) + " ");
                     }
                 }
                 Console.WriteLine();

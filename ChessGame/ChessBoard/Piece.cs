@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ChessGame.ChessBoard.Enums;
+﻿using ChessGame.ChessBoard.Enums;
 
 namespace ChessGame.ChessBoard
 {
@@ -12,9 +9,9 @@ namespace ChessGame.ChessBoard
         public int QtyMovements { get; protected set; }
         public Board Board { get; protected set; }
 
-        public Piece(Position position, Color color, Board board)
+        public Piece(Color color, Board board)
         {
-            Position = position;
+            Position = null;
             Color = color;
             Board = board;
             QtyMovements = 0;

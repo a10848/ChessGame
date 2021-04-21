@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ChessGame.ChessBoard
+﻿namespace ChessGame.ChessBoard
 {
     class Board
     {
@@ -17,9 +13,15 @@ namespace ChessGame.ChessBoard
             this.pieces = new Piece[lines, columns];
         }
 
-        public Piece piece(int line, int column)
+        public Piece Piece(int line, int column)
         {
             return pieces[line, column];
+        }
+
+        public void AddPiece(Piece piece, Position position)
+        {
+            pieces[position.Line, position.Column] = piece;
+            piece.Position = position;
         }
     }
 }
