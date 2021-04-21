@@ -22,6 +22,28 @@ namespace ChessBoard
             QtyMovements++;
         }
 
+        public bool ThereArePossibleMovements()
+        {
+            bool[,] movements = PossibleMovements();
+
+            for (int i = 0; i < Board.Lines; i++)
+            {
+                for (int j = 0; j < Board.Lines; j++)
+                {
+                    if (movements[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool CanBeMoved(Position position)
+        {
+            return PossibleMovements()[position.Line, position.Column];
+        }
+
         public abstract bool[,] PossibleMovements();
     }
 }

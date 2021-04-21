@@ -16,23 +16,41 @@ namespace ChessGame
 
                 while (!chessGame.Finished)
                 {
-                    Console.Clear();
-                    Screen.PrintScreen(chessGame.Board);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.PrintScreen(chessGame.Board);
 
-                    Console.WriteLine();
-                    Console.Write("From: ");
-                    Position from = Screen.ReadChessPosition().ToPosition();
+                        Console.WriteLine();
+                        Console.WriteLine("Round: " + chessGame.Round);
+                        Console.WriteLine("Payer turn: " + chessGame.Player);
 
-                    bool[,] possiblePositions = chessGame.Board.Piece(from).PossibleMovements();
+                        Console.WriteLine();
+                        Console.Write("Piece to move: ");
+                        Position from = Screen.ReadChessPosition().ToPosition();
+                        chessGame.ValidateOriginPosition(from);
 
-                    Console.Clear();
-                    Screen.PrintScreen(chessGame.Board, possiblePositions);
+                        bool[,] possiblePositions = chessGame.Board.Piece(from).PossibleMovements();
 
-                    Console.WriteLine();
-                    Console.Write("To: ");
-                    Position to = Screen.ReadChessPosition().ToPosition();
+                        Console.Clear();
+                        Screen.PrintScreen(chessGame.Board, possiblePositions);
 
-                    chessGame.PieceMovement(from, to);
+                        Console.WriteLine();
+                        Console.WriteLine("Round: " + chessGame.Round);
+                        Console.WriteLine("Payer turn: " + chessGame.Player);
+
+                        Console.WriteLine();
+                        Console.Write("Move to: ");
+                        Position to = Screen.ReadChessPosition().ToPosition();
+                        chessGame.ValidateFinalPosition(from, to);
+
+                        chessGame.MakeAMovement(from, to);
+                    }
+                    catch (BoardException error)
+                    {
+                        Console.WriteLine("Board error: " + error.Message);
+                        Console.ReadKey();
+                    }
                 }
 
             }
