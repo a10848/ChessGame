@@ -1,5 +1,6 @@
 ﻿using System;
-using ChessGame.Board;
+using ChessGame.ChessBoard;
+using ChessGame.ChessBoard.Enums;
 
 namespace ChessGame
 {
@@ -7,9 +8,9 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-            Position p = new Position(2, 3);
+            Board b = new Board(8, 8);
 
-            Console.WriteLine(p);
+            Console.WriteLine(b);
         }
     }
 }
