@@ -22,6 +22,13 @@ namespace ChessGame
                     Console.WriteLine();
                     Console.Write("From: ");
                     Position from = Screen.ReadChessPosition().ToPosition();
+
+                    bool[,] possiblePositions = chessGame.Board.Piece(from).PossibleMovements();
+
+                    Console.Clear();
+                    Screen.PrintScreen(chessGame.Board, possiblePositions);
+
+                    Console.WriteLine();
                     Console.Write("To: ");
                     Position to = Screen.ReadChessPosition().ToPosition();
 
