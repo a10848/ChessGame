@@ -15,10 +15,19 @@ namespace ChessGame
             PrintCapturedPieces(chessGame);
             Console.WriteLine();
             Console.WriteLine("Round: " + chessGame.Round);
-            Console.WriteLine("Payer turn: " + chessGame.Player);
-            if (chessGame.Check)
+            if (!chessGame.Finished)
             {
-                Console.WriteLine("Check to the king!");
+                Console.WriteLine("Payer turn: " + chessGame.Player);
+                if (chessGame.Check)
+                {
+                    Console.WriteLine("Check to the king!");
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Checkmate!");
+                Console.WriteLine("Congratulations "+ chessGame.Player+" for winning!");
             }
         }
 

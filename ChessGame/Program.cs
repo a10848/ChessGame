@@ -48,6 +48,8 @@ namespace ChessGame
                         Console.ReadKey();
                     }
                 }
+                Console.Clear();
+                Screen.PrintChessPlay(chessGame);
 
             }
             catch (BoardException error)

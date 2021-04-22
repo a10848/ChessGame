@@ -77,13 +77,13 @@ namespace ChessPieces
         {
             Piece capturedPiece = PieceMovement(origin, final);
 
-            if (IsInCheque(Player))
+            if (IsInCheck(Player))
             {
                 UndoMovement(origin, final, capturedPiece);
                 throw new BoardException("You cannot put yourself in check!");
             }
 
-            if (IsInCheque(Opponent(Player)))
+            if (IsInCheck(Opponent(Player)))
             {
                 Check = true;
             }
@@ -92,8 +92,15 @@ namespace ChessPieces
                 Check = false;
             }
 
-            Round++;
-            ChangePlayer();
+            if (TestCheckmate(Opponent(Player)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                Round++;
+                ChangePlayer();
+            }
         }
 
         public void ChangePlayer()
@@ -178,7 +185,7 @@ namespace ChessPieces
         /// </summary>
         /// <param name="color">color of the piece</param>
         /// <returns>returns if the king is in check or not</returns>
-        public bool IsInCheque(Color color)
+        public bool IsInCheck(Color color)
         {
             Piece king = King(color);
             if (king == null)
@@ -195,6 +202,44 @@ namespace ChessPieces
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// this function is testing if the player is in checkmate or not
+        /// </summary>
+        /// <param name="color">color of the piece</param>
+        /// <returns>returns if theres a checkmate or not</returns>
+        public bool TestCheckmate(Color color)
+        {
+            if (!IsInCheck(color))
+            {
+                return false;
+            }
+
+            foreach (Piece piece in PiecesInPlay(color))
+            {
+                bool[,] movements = piece.PossibleMovements();
+
+                for (int i = 0; i < Board.Lines; i++)
+                {
+                    for (int j = 0; j < Board.Columns; j++)
+                    {
+                        if (movements[i, j])
+                        {
+                            Position origin = piece.Position;
+                            Position final = new Position(i, j);
+                            Piece capturedPiece = PieceMovement(origin, final);
+                            bool testCheck = IsInCheck(color);
+                            UndoMovement(origin, final, capturedPiece);
+                            if (!testCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public void ValidateOriginPosition(Position position)
@@ -229,14 +274,11 @@ namespace ChessPieces
 
         private void PositioningPieces()
         {
-            AddNewPiece('a', 1, new Tower(Board, Color.White));
-            AddNewPiece('h', 1, new Tower(Board, Color.White));
-            AddNewPiece('a', 8, new Tower(Board, Color.Black));
-            AddNewPiece('h', 8, new Tower(Board, Color.Black));
-            AddNewPiece('e', 1, new King(Board, Color.White));
-            AddNewPiece('e', 8, new King(Board, Color.Black));
-            AddNewPiece('e', 2, new Tower(Board, Color.White));
-            AddNewPiece('e', 6, new Tower(Board, Color.Black));
+            AddNewPiece('c', 1, new Tower(Board, Color.White));
+            AddNewPiece('h', 7, new Tower(Board, Color.White));
+            AddNewPiece('d', 1, new King(Board, Color.White));
+            AddNewPiece('b', 8, new Tower(Board, Color.Black));
+            AddNewPiece('a', 8, new King(Board, Color.Black));
         }
     }
 }
