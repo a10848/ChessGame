@@ -22,6 +22,11 @@ namespace ChessBoard
             QtyMovements++;
         }
 
+        public void DeIncrementQtyMovements()
+        {
+            QtyMovements--;
+        }
+
         public bool ThereArePossibleMovements()
         {
             bool[,] movements = PossibleMovements();

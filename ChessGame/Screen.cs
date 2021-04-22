@@ -16,6 +16,10 @@ namespace ChessGame
             Console.WriteLine();
             Console.WriteLine("Round: " + chessGame.Round);
             Console.WriteLine("Payer turn: " + chessGame.Player);
+            if (chessGame.Check)
+            {
+                Console.WriteLine("Check to the king!");
+            }
         }
 
         public static void PrintCapturedPieces(RulesForChessGame chessGame)

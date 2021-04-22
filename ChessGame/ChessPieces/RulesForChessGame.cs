@@ -16,6 +16,7 @@ namespace ChessPieces
         public bool Finished { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> capturedPieces;
+        public bool Check { get; private set; }
 
         public RulesForChessGame()
         {
@@ -23,14 +24,22 @@ namespace ChessPieces
             Round = 1;
             Player = Color.White;
             Finished = false;
+            Check = false;
             pieces = new HashSet<Piece>();
             capturedPieces = new HashSet<Piece>();
             PositioningPieces();
         }
 
-        public void PieceMovement(Position origin, Position final)
+        /// <summary>
+        /// this piece makes a movement for any piece
+        /// </summary>
+        /// <param name="origin">choose the piece to be played</param>
+        /// <param name="final">choose de final destiny for the piece</param>
+        /// <returns>returns a piece if the movement cannot be made</returns>
+        public Piece PieceMovement(Position origin, Position final)
         {
             Piece piece = Board.RemovePiece(origin);
+
             piece.IncrementQtyMovements();
             Piece capturedPiece = Board.RemovePiece(final);
             Board.AddPiece(piece, final);
@@ -38,11 +47,51 @@ namespace ChessPieces
             {
                 capturedPieces.Add(capturedPiece);
             }
+            return capturedPiece;
         }
 
+        /// <summary>
+        /// this function undo the movement thas was made previously
+        /// </summary>
+        /// <param name="origin">origin place from the piece being moved</param>
+        /// <param name="final">final place for the piece being moved</param>
+        /// <param name="capturedPiece">piece thats being captured</param>
+        public void UndoMovement(Position origin, Position final, Piece capturedPiece)
+        {
+            Piece piece = Board.RemovePiece(final);
+            piece.DeIncrementQtyMovements();
+            if (capturedPiece != null)
+            {
+                Board.AddPiece(capturedPiece, final);
+                capturedPieces.Remove(capturedPiece);
+            }
+            Board.AddPiece(piece, origin);
+        }
+
+        /// <summary>
+        /// this function makes a move
+        /// </summary>
+        /// <param name="origin">piece being moved</param>
+        /// <param name="final">final destity for the piece</param>
         public void MakeAMovement(Position origin, Position final)
         {
-            PieceMovement(origin, final);
+            Piece capturedPiece = PieceMovement(origin, final);
+
+            if (IsInCheque(Player))
+            {
+                UndoMovement(origin, final, capturedPiece);
+                throw new BoardException("You cannot put yourself in check!");
+            }
+
+            if (IsInCheque(Opponent(Player)))
+            {
+                Check = true;
+            }
+            else
+            {
+                Check = false;
+            }
+
             Round++;
             ChangePlayer();
         }
@@ -90,6 +139,64 @@ namespace ChessPieces
             return auxPieces;
         }
 
+        /// <summary>
+        /// this function its use to return the color of the opponent.
+        /// </summary>
+        /// <param name="color">color of the chess piece</param>
+        /// <returns>returns color of the opponent</returns>
+        private Color Opponent(Color color)
+        {
+            if (color == Color.White)
+            {
+                return Color.Black;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
+
+        /// <summary>
+        /// this function returns which piece in play is the king of determined color
+        /// </summary>
+        /// <param name="color">color of the piece</param>
+        /// <returns>returns the king or nothig if theres none</returns>
+        private Piece King(Color color)
+        {
+            foreach (Piece piece in PiecesInPlay(color))
+            {
+                if (piece is King)
+                {
+                    return piece;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// this function is checking for all the pieces of the opponent if theres any movement that can hit the king
+        /// </summary>
+        /// <param name="color">color of the piece</param>
+        /// <returns>returns if the king is in check or not</returns>
+        public bool IsInCheque(Color color)
+        {
+            Piece king = King(color);
+            if (king == null)
+            {
+                throw new BoardException("Theres no " + color + " King on the board!");
+            }
+
+            foreach (Piece piece in PiecesInPlay(Opponent(color)))
+            {
+                bool[,] movements = piece.PossibleMovements();
+                if (movements[king.Position.Line, king.Position.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void ValidateOriginPosition(Position position)
         {
             if (Board.Piece(position) == null)
@@ -128,6 +235,8 @@ namespace ChessPieces
             AddNewPiece('h', 8, new Tower(Board, Color.Black));
             AddNewPiece('e', 1, new King(Board, Color.White));
             AddNewPiece('e', 8, new King(Board, Color.Black));
+            AddNewPiece('e', 2, new Tower(Board, Color.White));
+            AddNewPiece('e', 6, new Tower(Board, Color.Black));
         }
     }
 }
