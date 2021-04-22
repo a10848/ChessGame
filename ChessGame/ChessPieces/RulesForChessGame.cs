@@ -260,7 +260,7 @@ namespace ChessPieces
 
         public void ValidateFinalPosition(Position origin, Position final)
         {
-            if (!Board.Piece(origin).CanBeMoved(final))
+            if (!Board.Piece(origin).PossibleMove(final))
             {
                 throw new BoardException("This piece cannot be mooved to this position!");
             }

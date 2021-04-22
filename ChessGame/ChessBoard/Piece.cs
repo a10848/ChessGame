@@ -44,7 +44,7 @@ namespace ChessBoard
             return false;
         }
 
-        public bool CanBeMoved(Position position)
+        public bool PossibleMove(Position position)
         {
             return PossibleMovements()[position.Line, position.Column];
         }
