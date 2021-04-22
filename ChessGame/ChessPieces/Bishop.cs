@@ -3,16 +3,16 @@ using ChessBoard.Enums;
 
 namespace ChessPieces
 {
-    class Tower : Piece
+    class Bishop : Piece
     {
-        public Tower(Board board, Color color) : base(color, board)
+        public Bishop(Board board, Color color) : base(color, board)
         {
 
         }
 
         public override string ToString()
         {
-            return "T";
+            return "B";
         }
 
         private bool CanMove(Position position)
@@ -27,8 +27,8 @@ namespace ChessPieces
 
             Position pos = new Position(0, 0);
 
-            // north
-            pos.DefineValues(Position.Line - 1, Position.Column);
+            // northwest
+            pos.DefineValues(Position.Line - 1, Position.Column - 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 board[pos.Line, pos.Column] = true;
@@ -36,11 +36,11 @@ namespace ChessPieces
                 {
                     break;
                 }
-                pos.Line -= 1;
+                pos.DefineValues(Position.Line - 1, Position.Column - 1);
             }
 
-            // south
-            pos.DefineValues(Position.Line + 1, Position.Column);
+            // northest
+            pos.DefineValues(Position.Line - 1, Position.Column + 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 board[pos.Line, pos.Column] = true;
@@ -48,11 +48,11 @@ namespace ChessPieces
                 {
                     break;
                 }
-                pos.Line += 1;
+                pos.DefineValues(Position.Line - 1, Position.Column + 1);
             }
 
-            // east
-            pos.DefineValues(Position.Line, Position.Column + 1);
+            // southwest
+            pos.DefineValues(Position.Line + 1, Position.Column - 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 board[pos.Line, pos.Column] = true;
@@ -60,11 +60,10 @@ namespace ChessPieces
                 {
                     break;
                 }
-                pos.Column += 1;
+                pos.DefineValues(Position.Line + 1, Position.Column - 1);
             }
-
-            // west
-            pos.DefineValues(Position.Line, Position.Column - 1);
+            // southest
+            pos.DefineValues(Position.Line + 1, Position.Column + 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 board[pos.Line, pos.Column] = true;
@@ -72,7 +71,7 @@ namespace ChessPieces
                 {
                     break;
                 }
-                pos.Column -= 1;
+                pos.DefineValues(Position.Line + 1, Position.Column + 1);
             }
 
             return board;
