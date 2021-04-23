@@ -3,10 +3,8 @@ using ChessBoard.Enums;
 
 namespace ChessPlay.ChessPieces
 {
-
     class Pawn : Piece
     {
-
         private ChessMatch match;
 
         public Pawn(Board chessBoard, Color color, ChessMatch match) : base(chessBoard, color)

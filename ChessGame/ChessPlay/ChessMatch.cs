@@ -8,7 +8,6 @@ namespace ChessPlay
 {
     class ChessMatch
     {
-
         public Board chessBoard { get; private set; }
         public int round { get; private set; }
         public Color currentPlayer { get; private set; }
@@ -188,7 +187,6 @@ namespace ChessPlay
             {
                 enPassantVulnerability = null;
             }
-
         }
 
         public void ValidateOriginPosition(Position position)

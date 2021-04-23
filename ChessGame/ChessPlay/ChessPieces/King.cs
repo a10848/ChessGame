@@ -5,7 +5,6 @@ namespace ChessPlay.ChessPieces
 {
     class King : Piece
     {
-
         private ChessMatch match;
 
         public King(Board chessBoard, Color color, ChessMatch match) : base(chessBoard, color)
@@ -33,7 +32,6 @@ namespace ChessPlay.ChessPieces
         public override bool[,] PossibleMovements()
         {
             bool[,] movements = new bool[chessBoard.line, chessBoard.column];
-
             Position pos = new Position(0, 0);
 
             // acima

@@ -4,7 +4,6 @@ namespace ChessPlay
 {
     class PiecesPosition
     {
-
         public char column { get; set; }
         public int line { get; set; }
 

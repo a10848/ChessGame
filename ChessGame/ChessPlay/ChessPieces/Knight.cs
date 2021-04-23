@@ -3,10 +3,8 @@ using ChessBoard.Enums;
 
 namespace ChessPlay.ChessPieces
 {
-
     class Knight : Piece
     {
-
         public Knight(Board chessBoard, Color color) : base(chessBoard, color)
         {
         }
@@ -25,7 +23,6 @@ namespace ChessPlay.ChessPieces
         public override bool[,] PossibleMovements()
         {
             bool[,] movements = new bool[chessBoard.line, chessBoard.column];
-
             Position pos = new Position(0, 0);
 
             pos.DefineValue(position.line - 1, position.column - 2);

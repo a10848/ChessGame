@@ -8,7 +8,6 @@ namespace ChessGame
 {
     class Screen
     {
-
         public static void PrintScreen(ChessMatch match)
         {
             PrintBoard(match.chessBoard);
@@ -59,7 +58,6 @@ namespace ChessGame
 
         public static void PrintBoard(Board chessBoard)
         {
-
             for (int i = 0; i < chessBoard.line; i++)
             {
                 Console.Write(8 - i + " ");
@@ -127,7 +125,6 @@ namespace ChessGame
 
         public static void PrintPiece(Piece piece)
         {
-
             if (piece == null)
             {
                 Console.Write(" - ");
@@ -152,6 +149,5 @@ namespace ChessGame
                 Console.Write(" ");
             }
         }
-
     }
 }

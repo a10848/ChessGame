@@ -9,14 +9,12 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-
             try
             {
                 ChessMatch match = new ChessMatch();
 
                 while (!match.finished)
                 {
-
                     try
                     {
                         Console.Clear();

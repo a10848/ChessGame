@@ -5,7 +5,6 @@ namespace ChessPlay.ChessPieces
 {
     class Rook : Piece
     {
-
         public Rook(Board tab, Color cor) : base(tab, cor)
         {
         }

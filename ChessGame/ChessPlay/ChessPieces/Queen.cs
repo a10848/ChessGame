@@ -6,7 +6,6 @@ namespace ChessPlay.ChessPieces
 
     class Queen : Piece
     {
-
         public Queen(Board chessBoard, Color color) : base(chessBoard, color)
         {
         }
@@ -25,7 +24,6 @@ namespace ChessPlay.ChessPieces
         public override bool[,] PossibleMovements()
         {
             bool[,] movements = new bool[chessBoard.line, chessBoard.column];
-
             Position pos = new Position(0, 0);
 
             // esquerda

@@ -4,7 +4,6 @@ namespace ChessBoard
 {
     class Board
     {
-
         public int line { get; set; }
         public int column { get; set; }
         private Piece[,] pieces;
