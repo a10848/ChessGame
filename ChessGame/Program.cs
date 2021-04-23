@@ -1,8 +1,7 @@
 ﻿using System;
 using ChessBoard;
-using ChessPieces;
-using ChessBoard.Enums;
 using ChessBoard.Exceptions;
+using ChessPlay;
 
 namespace ChessGame
 {
@@ -10,52 +9,51 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
+
             try
             {
-                RulesForChessGame chessGame = new RulesForChessGame();
+                ChessMatch match = new ChessMatch();
 
-                while (!chessGame.Finished)
+                while (!match.finished)
                 {
+
                     try
                     {
                         Console.Clear();
-                        Screen.PrintChessPlay(chessGame);
+                        Screen.PrintScreen(match);
 
                         Console.WriteLine();
-                        Console.Write("Piece to move: ");
-                        Position from = Screen.ReadChessPosition().ToPosition();
-                        chessGame.ValidateOriginPosition(from);
+                        Console.Write("Piece: ");
+                        Position origin = Screen.ReadPosition().ToPosition();
+                        match.ValidateOriginPosition(origin);
 
-                        bool[,] possiblePositions = chessGame.Board.Piece(from).PossibleMovements();
+                        bool[,] possiblePositions = match.chessBoard.Piece(origin).PossibleMovements();
 
                         Console.Clear();
-                        Screen.PrintScreen(chessGame.Board, possiblePositions);
-
-                        Console.WriteLine();
-                        Console.WriteLine("Round: " + chessGame.Round);
-                        Console.WriteLine("Payer turn: " + chessGame.Player);
+                        Screen.PrintPossibleMovements(match.chessBoard, possiblePositions, match);
 
                         Console.WriteLine();
                         Console.Write("Move to: ");
-                        Position to = Screen.ReadChessPosition().ToPosition();
-                        chessGame.ValidateFinalPosition(from, to);
+                        Position destiny = Screen.ReadPosition().ToPosition();
+                        match.ValidadeDestinyPosition(origin, destiny);
 
-                        chessGame.MakeAMovement(from, to);
+                        match.MoveMade(origin, destiny);
                     }
-                    catch (BoardException error)
+                    catch (BoardException e)
                     {
-                        Console.WriteLine("Board error: " + error.Message);
-                        Console.ReadKey();
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
                     }
                 }
                 Console.Clear();
-                Screen.PrintChessPlay(chessGame);
-
+                Screen.PrintScreen(match);
             }
-            catch (BoardException error)
+            catch (BoardException e)
             {
-                Console.WriteLine("Board error: " + error.Message);
+                Console.WriteLine(e.Message);
             }
+
+            Console.ReadLine();
         }
     }
 }

@@ -4,66 +4,70 @@ namespace ChessBoard
 {
     class Board
     {
-        public int Lines { get; set; }
-        public int Columns { get; set; }
+
+        public int line { get; set; }
+        public int column { get; set; }
         private Piece[,] pieces;
 
-        public Board(int lines, int columns)
+        public Board(int line, int column)
         {
-            Lines = lines;
-            Columns = columns;
-            this.pieces = new Piece[lines, columns];
+            this.line = line;
+            this.column = column;
+            pieces = new Piece[line, column];
         }
 
         public Piece Piece(int line, int column)
         {
             return pieces[line, column];
         }
+
         public Piece Piece(Position position)
         {
-            return pieces[position.Line, position.Column];
+            return pieces[position.line, position.column];
         }
-        public bool ExistingPiece(Position position)
+
+        public bool IsThereAPiece(Position position)
         {
-            PositionValidation(position);
+            ValidatePosition(position);
             return Piece(position) != null;
         }
 
-        public void AddPiece(Piece piece, Position position)
+        public void PlaceAPiece(Piece piece, Position position)
         {
-            if (ExistingPiece(position))
+            if (IsThereAPiece(position))
             {
-                throw new BoardException("This position already has a piece!");
+                throw new BoardException("There is already a piece in that position!");
             }
-            pieces[position.Line, position.Column] = piece;
-            piece.Position = position;
+            pieces[position.line, position.column] = piece;
+            piece.position = position;
         }
-        public Piece RemovePiece(Position position)
+
+        public Piece RemoveAPiece(Position position)
         {
             if (Piece(position) == null)
             {
                 return null;
             }
             Piece auxPiece = Piece(position);
-            auxPiece.Position = null;
-            pieces[position.Line, position.Column] = null;
+            auxPiece.position = null;
+            pieces[position.line, position.column] = null;
             return auxPiece;
         }
 
         public bool ValidPosition(Position position)
         {
-            if (position.Line < 0 || position.Line >= Lines || position.Column < 0 || position.Column >= Columns)
+            if (position.line < 0 || position.line >= line || position.column < 0 || position.column >= column)
             {
                 return false;
             }
             return true;
         }
 
-        public void PositionValidation(Position position)
+        public void ValidatePosition(Position position)
         {
             if (!ValidPosition(position))
             {
-                throw new BoardException("Invalid board position!");
+                throw new BoardException("Invalid position!");
             }
         }
     }
