@@ -1,7 +1,7 @@
 ﻿using ChessBoard;
 using ChessBoard.Enums;
 
-namespace ChessPlay
+namespace ChessPlay.ChessPieces
 {
 
     class Knight : Piece

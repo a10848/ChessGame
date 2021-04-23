@@ -2,6 +2,7 @@
 using ChessBoard;
 using ChessBoard.Enums;
 using ChessBoard.Exceptions;
+using ChessPlay.ChessPieces;
 
 namespace ChessPlay
 {
